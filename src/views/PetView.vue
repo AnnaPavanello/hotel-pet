@@ -1,37 +1,31 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import {onMounted, ref} from 'vue'; 'onMounted' 
+const API_URL = 'http://localhost:3000';  'API_URL' 
 
-const API_URL = 'http://localhost:3000';
+const pets = ref([]); 'pets' 
+const tutores = ref([]); 'tutores' 
 
-const pets = ref([]);
-const tutores = ref([]);
-const carregando = ref(true);
-const erro = ref('');
+async function carregarDados() {
+  const respostaPets = await fetch(`${API_URL}/pets`); 
 
-async function carregarPets() {
-  carregando.value = true;
-  erro.value = '';
+  pets.value = await respostaPets.json(); 
 
-  try {
-    const respostaPets = await fetch(`${API_URL}/pets`);
-    if (!respostaPets.ok) {
-      throw new Error('Não foi possível carregar os pets.');
+  const respostaTutores = await fetch(`${API_URL}/tutores`); 
+  
+  tutores.value = await respostaTutores.json(); 
+}
+function nomeDoTutor(tutorId){
+  for(const tutor of tutores.value){
+    if(tutor.id === tutorId){
+      return tutor.nome
     }
-    pets.value = await respostaPets.json();
-
-    const respostaTutores = await fetch(`${API_URL}/tutores`);
-    if (!respostaTutores.ok) {
-      throw new Error('Não foi possível carregar os tutores.');
-    }
-    tutores.value = await respostaTutores.json();
-  } catch {
-    erro.value = 'Não foi possível carregar os pets. Tente novamente.';
-  } finally {
-    carregando.value = false;
   }
 }
 
-onMounted(carregarPets);
+onMounted(() => {
+  carregarDados();
+});
+
 </script>
 
 <template>
@@ -42,33 +36,28 @@ onMounted(carregarPets);
         Listagem dos Pets cadastrados no sistema.
       </p>
     </header>
-  </div>
+</div>
+<table class="table table-striped table-hover">
+  <thead>
+    <th>ID</th>
+    <th>Nome</th>
+    <th>Espécie</th>
+    <th>Tutor</th>
+  </thead>
+  <tbody>
+    <tr v-for="pet in pets" :key="pet.id">
+      <td>{{ pet.id }}</td>
+      <td>{{ pet.nome }}</td>
+      <td>{{ pet.especie }}</td>
+      <td>{{ nomeDoTutor(pet.tutorId) }}</td>
+      
+    </tr>
+  </tbody>
+</table>
 
-  <p v-if="carregando" role="status">Carregando pets...</p>
-  <p v-else-if="erro" role="alert">{{ erro }}</p>
-
-  <table v-else>
-    <thead>
-      <th>ID</th>
-      <th>Nome</th>
-      <th>Espécie</th>
-      <th>Tutor</th>
-    </thead>
-    <tbody>
-      <tr
-        v-for="pet in pets"
-        :key="pet.id"
-      >
-        <td>{{ pet.id }}</td>
-        <td>{{ pet.nome }}</td>
-        <td>{{ pet.especie }}</td>
-        <td>
-          {{
-            tutores.find((t) => t.id === pet.tutorId)?.nome ||
-            'Não especificado'
-          }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  
 </template>
+
+<script setup>
+
+</script>
