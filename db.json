@@ -1,10 +1,25 @@
 {
   "tutores": [
-    { "id": "1", "nome": "Ana", "telefone": "47999990000" },
-    { "id": "2", "nome": "Carlos", "telefone": "47988880000" }
+    {
+      "nome": "vitoria",
+      "email": "vitoria@gmail.com",
+      "telefone": "456706898",
+      "id": "tnoI_akgFZw"
+    }
   ],
   "pets": [
-    { "id": "1", "nome": "Safira", "especie": "Cachorro", "tutorId": "1" },
-    { "id": "2", "nome": "Nino", "especie": "Gato", "tutorId": "1" }
-  ]
+    {
+      "nome": "CHUVISCO",
+      "especie": "Cachorro",
+      "tutorId": "7s31YpTms5M",
+      "id": "v3YjxWTNTpQ"
+    },
+    {
+      "nome": "amora",
+      "especie": "Cachorro",
+      "tutorId": "tnoI_akgFZw",
+      "id": "d1Xx53cGSjk"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

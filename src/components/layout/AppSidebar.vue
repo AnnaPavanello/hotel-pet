@@ -17,6 +17,18 @@ import { RouterLink } from 'vue-router';
         Pets
       </RouterLink>
 
+            <RouterLink
+        class="nav-link"
+        active-class="active"
+        to="/tutor"
+      >
+        <i
+          class="bi bi-heart me-2"
+          aria-hidden="true"
+        ></i>
+        Tutores
+      </RouterLink>
+
       <RouterLink
         class="nav-link"
         active-class="active"
@@ -28,6 +40,20 @@ import { RouterLink } from 'vue-router';
         ></i>
         Novo pet
       </RouterLink>
+
+       <RouterLink
+        class="nav-link"
+        active-class="active"
+        to="/tutor/novo"
+      >
+        <i
+          class="bi bi-plus-circle me-2"
+          aria-hidden="true"
+        ></i>
+        Novo Tutor
+      </RouterLink>
+
+
 
       <span
         class="nav-link text-body-secondary"
