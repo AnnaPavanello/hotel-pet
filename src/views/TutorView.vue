@@ -24,6 +24,7 @@ async function excluirTutor(tutorId) {
   }
 }
 
+
 onMounted(() => {
   carregarDados();
 });
