@@ -102,9 +102,10 @@ const nomeValido = computed(() => novoTutor.value.nome.trim().length > 0);
 const telefoneValido = computed(
   () => novoTutor.value.telefone.replace(/\D/g, '').length >= 10,
 );
-const cpfValido = computed(
-  () => novoTutor.value.cpfCnpj.replace(/\D/g, '').length >= 11,
-);
+const cpfValido = computed(() => {
+  const cpfNumeros = novoTutor.value.cpfCnpj.replace(/\D/g, '');
+  return cpfNumeros.length === 0 || cpfNumeros.length >= 11;
+});
 const formValido = computed(
   () => nomeValido.value && telefoneValido.value && cpfValido.value,
 );
@@ -243,10 +244,10 @@ async function salvarTutor() {
           @input="atualizarCpfCnpj"
         />
         <small
-          v-if="tentouEnviar && !cpfValido"
+          v-if="tentouEnviar && novoTutor.cpfCnpj && !cpfValido"
           class="text-danger d-block"
         >
-          campo obrigatorio, preencha-o antes de continuar
+          CPF/CNPJ inválido. Informe um valor válido ou deixe em branco.
         </small>
       </div>
 
